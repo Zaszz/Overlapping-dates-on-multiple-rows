@@ -1,0 +1,8 @@
+//This works by checking the practice_person_family_info table to it self, so we are joining that table back to it self, then checking each entry if it has a date overlap with any other entires.  This method could be useful in any case where you need to check if one row overlaps with another row in a table.  I also use != to make sure we don't match one row to it self.
+
+select p.first_name, p.last_name, p.date_of_birth ,ppfi1.person_id,ppfi1.eff_date,ppfi1.exp_date
+from practice_person_family_info ppfi1, practice_person_family_info ppfi2, person p
+where (ppfi1.eff_date <= ppfi2.exp_date) and (ppfi2.eff_date <= ppfi1.exp_date)
+and ppfi1.person_id = ppfi2.person_id
+and ppfi1.person_family_info_id != ppfi2.person_family_info_id
+and p.person_id = ppfi1.person_id
